@@ -81,6 +81,7 @@ class VMBackend(ABC):
         self,
         circuit: NonParametricQuantumCircuit,
         lowering_level: LoweringLevel | None = None,
+        transpile: bool = True,
     ) -> AnalyzeResult: ...
 
     @abstractmethod
@@ -127,16 +128,19 @@ class _DevicePropertyBackend(VMBackend):
         self,
         circuit: NonParametricQuantumCircuit,
         lowering_level: LoweringLevel | None = None,
+        transpile: bool = True,
     ) -> AnalyzeResult:
         lowering_level = self._check_select_lowering_level(lowering_level)
 
-        if (
-            lowering_level == LoweringLevel.ArchLogicalCircuit
-            and self._device.analyze_transpiler is not None
-        ):
-            circuit = self._device.analyze_transpiler(circuit)
-        else:
-            circuit = self.transpile(circuit, lowering_level)
+        if transpile:
+            if (
+                lowering_level == LoweringLevel.ArchLogicalCircuit
+                and self._device.analyze_transpiler is not None
+            ):
+                circuit = self._device.analyze_transpiler(circuit)
+            else:
+                circuit = self.transpile(circuit, lowering_level)
+
         return AnalyzeResult(
             lowering_level=lowering_level,
             qubit_count=len(

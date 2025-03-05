@@ -152,7 +152,9 @@ class VM:
                 "Transpiler is not supported for the required LoweringLevel."
             )
 
-    def analyze(self, circuit: NonParametricQuantumCircuit) -> AnalyzeResult:
+    def analyze(
+        self, circuit: NonParametricQuantumCircuit, transpile: bool = True
+    ) -> AnalyzeResult:
         """Analyze and estimate the costs of the given circuit at current lowering
         level."""
         if self._lowering_level == LoweringLevel.LogicalCircuit:
@@ -170,6 +172,6 @@ class VM:
                 fidelity=1.0,
             )
         elif self._backend is not None:
-            return self._backend.analyze(circuit, self._lowering_level)
+            return self._backend.analyze(circuit, self._lowering_level, transpile)
         else:
             raise ValueError("Cannot analyze for the required LoweringLevel.")
