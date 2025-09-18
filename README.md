@@ -1,3 +1,5 @@
+⚠️ ___THIS REPOSITORY IS ARCHIVED AND IS NO LONGER BEING MAINTAINED. CONTENTS HAVE BEEN MOVED TO https://github.com/QunaSys/quri-sdk. For a guide on how to migrate existing PRs, please see https://github.com/QunaSys/quri-vm/blob/main/MIGRATION.md___ ⚠️
+
 # QURI VM
 
 QURI VM is an open source library for resource estimation and execution of FTQC algorithms.
